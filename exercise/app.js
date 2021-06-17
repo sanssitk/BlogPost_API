@@ -3,6 +3,18 @@ const app = express();
 const Post = require("./api/models/posts");
 const postData = new Post();
 
+
+// Middleware to allow access-control
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
+
+// Middleware to allow access static folder to public
+app.use("/uploads", express.static("uploads"))
+
+
+
 app.get("/api/posts", (req, res) => {
   res.status(200).send(postData.get());
 });
